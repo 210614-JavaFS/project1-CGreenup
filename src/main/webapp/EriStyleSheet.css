@@ -1,0 +1,32 @@
+div{
+	padding:25px;
+}
+
+#formDiv{
+	margin-left: 30%;
+	margin-right:30%;
+	
+}
+
+#submitButtonDiv{
+	padding-left: 0px;
+	padding-top: 15px;
+}
+
+label{
+	padding-top: 10px;
+	padding-right: 20px;
+}
+
+#titleDiv{
+    margin: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: darkred;
+
+    border-radius: 10px;
+}
+
+h2{
+    color: bisque;
+}
