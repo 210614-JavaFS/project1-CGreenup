@@ -36,6 +36,12 @@ public class UserService {
 		return 2;
 	}
 
+	public static User getUser(String userIdentifier) {
+		return userDAO.getUser(userIdentifier);
+	}
+	
+	
+	
 	private UserService() {}
 	public static UserService getUserService() {
 		if (service == null) {
