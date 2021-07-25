@@ -1,5 +1,7 @@
 package com.revature.data;
 
-public interface UserDAO {
+import com.revature.models.User;
 
+public interface UserDAO {
+	public User getUser(String identifier);
 }

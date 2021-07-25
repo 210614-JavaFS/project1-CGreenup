@@ -5,12 +5,13 @@ div{
 #formDiv{
 	margin-left: 30%;
 	margin-right:30%;
+
+	min-width: 260px;
 	
 }
 
 #submitButtonDiv{
 	padding-left: 0px;
-	padding-top: 15px;
 }
 
 label{
