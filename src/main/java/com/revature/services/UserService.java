@@ -20,7 +20,7 @@ public class UserService {
 		String originalPassword = User.encryptPassword(user.getPassword());
 		
 		//Get user from the Database
-		user = userDAO.getUser(user.getUsername());
+		user = userDAO.getUser(user.getUsername().toLowerCase());
 		
 		//If the user does not exist in the database, the user object will be null
 		if (user == null) {

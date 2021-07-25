@@ -34,19 +34,21 @@ public class LoginServlet extends HttpServlet{
 		System.out.println("Password: " + password);
 		
 		UserService.getUserService();
-//		int loginStatus = userService.login(user);
-//		
-//		if(loginStatus == 0) {
-//			log.info("Login success");
-//			log.info(user.toString());
-//		}
-//		//If the username has the error
-//		else if(loginStatus == 1) {
-//			log.error("ERROR: Username not found");
-//		}
-//		else {
-//			log.error("ERROR: Password does not match");
-//		}
+		int loginStatus = UserService.login(user);
+		
+		if(loginStatus == 0) {
+			log.info("Login success");
+			log.info(user.toString());
+		}
+		//If the username has the error
+		else if(loginStatus == 1) {
+			log.error("ERROR: Username not found");
+			System.out.println("ERROR: Username not found");
+		}
+		else {
+			log.error("ERROR: Password does not match");
+			System.out.println("ERROR: Password does not match");
+		}
 		
 	}
 }
