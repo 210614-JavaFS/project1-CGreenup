@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.data.UserDAOImpl;
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
@@ -38,5 +39,18 @@ public class ServiceTest {
 		String myEncryption = User.encryptPassword("hello");
 		
 		assertEquals(encryption, myEncryption);
+	}
+	
+	@Test
+	public void getUserTest() {
+		UserDAOImpl impl = new UserDAOImpl();
+		
+		User user1 = impl.getUser("JuneAdmin");
+		log.info(user1.toString());
+		
+		User user2 = impl.getUser("example@email.com");
+		log.info(user2.toString());
+		
+		assertEquals(user1, user2);
 	}
 }
