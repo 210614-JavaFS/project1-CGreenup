@@ -49,8 +49,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [\nuserId = " + userId + ",\nusername = " + username + ",\npassword = " + password + ",\nemail=" + email
-				+ ",\nuserType=" + userType + ",\nfirstName=" + firstName + ",\nlastName=" + lastName + "]";
+		return "User [ userId = " + userId + ", username = " + username + ", password = " + password + ", email=" + email
+				+ ", userType=" + userType + ", firstName=" + firstName + ", lastName=" + lastName + " ]";
 	}
 
 	//This method encrypts a given string into SHA-256 encrypted hex-code

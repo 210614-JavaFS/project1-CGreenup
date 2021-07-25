@@ -4,16 +4,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.data.UserDAOImpl;
 import com.revature.models.User;
+import com.revature.services.UserService;
 import com.revature.utils.ConnectionUtil;
 
 public class ServiceTest {
-	Logger log = LoggerFactory.getLogger(ServiceTest.class);
+	static Logger log = LoggerFactory.getLogger(ServiceTest.class);
+	
+	
+	@BeforeAll
+	public static void denoteBeginningInLog() {
+		log.info("==================================================");
+		log.info("Beginning testing");
+	}
 	
 	//Test whether I can get a connection
 	@Test
@@ -53,4 +63,24 @@ public class ServiceTest {
 		
 		assertEquals(user1, user2);
 	}
+	
+	@Test
+	public void loginTest() {
+		UserService.getUserService();
+		
+		User user = new User();
+		user.setUsername("JuneAdmin");
+		user.setPassword("pass");
+		
+		UserService.login(user);
+		
+		log.info("LOGIN TEST: " + user.toString());
+	}
+	
+	@AfterAll
+	public static void denoteEndOfTesting() {
+		log.info("All tests have been conducted");
+		log.info("==================================================");
+	}
+	
 }

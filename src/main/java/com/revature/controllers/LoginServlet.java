@@ -7,21 +7,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.revature.models.User;
 import com.revature.services.UserService;
 
 public class LoginServlet extends HttpServlet{
 	
-	private static UserService userService = new UserService();
+	private static Logger log = LoggerFactory.getLogger(LoginServlet.class);
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("inputName");
+		log.info("Made it to doPost");
+		System.out.println("made it to doPost");
+		
+		User user = new User();
+		
+		String userIdentifier = request.getParameter("inputName");
 		String password = request.getParameter("inputPassword");
 		
-		if(userService.login(username, password)) {
-			
-		}else {
-			
-		}
+		user.setUsername(userIdentifier);
+		user.setPassword(password);
+				
+		System.out.println("Username: " + userIdentifier);
+		System.out.println("Password: " + password);
+		
+		UserService.getUserService();
+//		int loginStatus = userService.login(user);
+//		
+//		if(loginStatus == 0) {
+//			log.info("Login success");
+//			log.info(user.toString());
+//		}
+//		//If the username has the error
+//		else if(loginStatus == 1) {
+//			log.error("ERROR: Username not found");
+//		}
+//		else {
+//			log.error("ERROR: Password does not match");
+//		}
+		
 	}
 }
