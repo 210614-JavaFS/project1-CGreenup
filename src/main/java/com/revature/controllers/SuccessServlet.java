@@ -14,9 +14,9 @@ import com.revature.models.UserRoles;
 import com.revature.services.UserService;
 
 public class SuccessServlet extends HttpServlet{
-
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
 		resp.setContentType("text/html");
 		PrintWriter pw = resp.getWriter();
@@ -39,44 +39,49 @@ public class SuccessServlet extends HttpServlet{
 				pw.print("<div><p>Manager</p>");
 				pw.print("<p>Second ptag</p></div>");
 			}else {
-				displayEmployeeScreen(pw);
+				displayEmployeeScreen(user.getFirstName(), pw);
 			}
 			
 		}
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
-	}
-	
-	protected void displayEmployeeScreen(PrintWriter pw) {
+	protected void displayEmployeeScreen(String name, PrintWriter pw) {
 		pw.print("<style>"
 				+ "#mainDiv{\r\n"
-				+ "    margin: 20px;\r\n"
-				+ "  }\r\n"
-				+ "  \r\n"
-				+ "  button{\r\n"
-				+ "    width:100%;\r\n"
-				+ "    height:70px;\r\n"
-				+ "  }\r\n"
-				+ "  \r\n"
-				+ "  #tableHead{\r\n"
-				+ "    background: black;\r\n"
-				+ "    color: white;\r\n"
-				+ "  }\r\n"
-				+ "  \r\n"
-				+ "  label{\r\n"
-				+ "    padding-bottom: 5px;\r\n"
-				+ "    padding-left: 8px;\r\n"
-				+ "  }"
+				+ "  margin: 20px;\r\n"
+				+ "}\r\n"
+				+ "\r\n"
+				+ "#newReq{\r\n"
+				+ "  width:100%;\r\n"
+				+ "  height:70px;\r\n"
+				+ "}\r\n"
+				+ "\r\n"
+				+ "#tableHead{\r\n"
+				+ "  background: black;\r\n"
+				+ "  color: white;\r\n"
+				+ "}\r\n"
+				+ "\r\n"
+				+ "h5{\r\n"
+				+ "  padding-top:10px;\r\n"
+				+ "  padding-bottom: 5px;\r\n"
+				+ "  padding-left: 8px;\r\n"
+				+ "}"
 				+ "</style>");
 		
 		pw.print("<div id='mainDiv'>\r\n"
-				+ "  <button class = \"btn btn-outline-secondary\" >Create New Request</button>\r\n"
+				+ "  <div align='right'>\r\n"
+				+ "    <form action = 'logout'>\r\n"
+				+ "      <button class=\"btn btn-primary\" id='logoutBtn' type = 'submit'>Sign out</button>\r\n"
+				+ "    </form>\r\n"
+				+ "  </div>\r\n"
+				+ "  <h2>Welcome, " + name + "</h2>\r\n"
+				+ "  \r\n"
+				+ "  <form action = 'newRequest' >\r\n"
+				+ "    <button id='newReq' class = \"btn btn-outline-secondary\" type = 'submit'>Create New Request</button>\r\n"
+				+ "  </form>\r\n"
 				+ "  \r\n"
 				+ "  <div id='tableDiv'>\r\n"
-				+ "    <label for='requestTable'><b>Submitted Requests</b></label>\r\n"
+				+ "    <h5>Submitted Requests</h5>\r\n"
 				+ "  <table class=\"table\" id='requestTable'>\r\n"
 				+ "    <thead id='tableHead'>\r\n"
 				+ "      <tr>\r\n"
@@ -87,8 +92,7 @@ public class SuccessServlet extends HttpServlet{
 				+ "      </tr>\r\n"
 				+ "    </thead>\r\n"
 				+ "    \r\n"
-				+ "    <tbody>\r\n"
-				+ "      \r\n"
+				+ "    <tbody id='tableBody'>\r\n"
 				+ "    </tbody>\r\n"
 				+ "  </table>\r\n"
 				+ "  </div>\r\n"
