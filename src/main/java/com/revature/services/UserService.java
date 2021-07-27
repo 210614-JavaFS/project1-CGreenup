@@ -1,16 +1,22 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.data.ReimbursementDAO;
+import com.revature.data.ReimbursementDAOImpl;
 import com.revature.data.UserDAO;
 import com.revature.data.UserDAOImpl;
+import com.revature.models.Reimbursement;
 import com.revature.models.User;
 
 
 public class UserService {
 	private static UserService service = null;	
 	private static UserDAO userDAO = new UserDAOImpl();
+	private static ReimbursementDAO reimbDAO = new ReimbursementDAOImpl();
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
 
 	//returns 0 if success
@@ -40,6 +46,9 @@ public class UserService {
 		return userDAO.getUser(userIdentifier);
 	}
 	
+	public static List<Reimbursement> getUsersRequests(User user){
+		return reimbDAO.getUsersRequests(user);
+	}
 	
 	
 	private UserService() {}
@@ -50,6 +59,8 @@ public class UserService {
 		}
 		return service;
 	}
+	
+	
 	
 	
 	

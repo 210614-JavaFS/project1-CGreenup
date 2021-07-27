@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementStatus;
 import com.revature.models.User;
 import com.revature.models.UserRoles;
 import com.revature.services.UserService;
@@ -45,13 +48,13 @@ public class SuccessServlet extends HttpServlet{
 				pw.print("<div><p>Manager</p>");
 				pw.print("<p>Second ptag</p></div>");
 			}else {
-				displayEmployeeScreen(user.getFirstName(), pw);
+				displayEmployeeScreen(user, pw);
 			}
 			
 		}
 	}
 	
-	protected void displayEmployeeScreen(String name, PrintWriter pw) {
+	protected void displayEmployeeScreen(User user, PrintWriter pw) {
 		pw.print("<style>"
 				+ "#mainDiv{\r\n"
 				+ "  margin: 20px;\r\n"
@@ -80,7 +83,7 @@ public class SuccessServlet extends HttpServlet{
 				+ "      <button class=\"btn btn-primary\" id='logoutBtn' type = 'submit'>Sign out</button>\r\n"
 				+ "    </form>\r\n"
 				+ "  </div>\r\n"
-				+ "  <h2>Welcome, " + name + "</h2>\r\n"
+				+ "  <h2>Welcome, " + user.getFirstName() + "</h2>\r\n"
 				+ "  \r\n"
 				+ "  <form action = 'newRequest' >\r\n"
 				+ "    <button id='newReq' class = \"btn btn-outline-secondary\" type = 'submit'>Create New Request</button>\r\n"
@@ -99,10 +102,36 @@ public class SuccessServlet extends HttpServlet{
 				+ "    </thead>\r\n"
 				+ "    \r\n"
 				+ "    <tbody id='tableBody'>\r\n"
+				+ 		getRequests(user)
 				+ "    </tbody>\r\n"
 				+ "  </table>\r\n"
 				+ "  </div>\r\n"
 				+ "</div>");
+	}
+	
+	private String getRequests(User user) {
+		UserService.getUserService();
+		List<Reimbursement> usersRequests = UserService.getUsersRequests(user);
+		StringBuilder bodyContent = new StringBuilder();
+		
+		for(Reimbursement r : usersRequests) {
+			bodyContent.append("<tr>");
+				bodyContent.append("<td>" + r.getId() + "</td>");
+				bodyContent.append("<td>" + r.getType() + ": " + r.getDescription() + "</td>");
+				bodyContent.append("<td>$" + r.getAmount() + "</td>");
+				
+				if (r.getStatus() == ReimbursementStatus.APPROVED)
+					bodyContent.append("<td class='bg-success'>");
+				else if(r.getStatus() == ReimbursementStatus.DENIED)
+					bodyContent.append("<td class='bg-danger'>");
+				else
+					bodyContent.append("<td class='bg-warning'>");
+				
+				bodyContent.append(r.getStatus() + "</td>");
+			bodyContent.append("</tr>");
+		}
+		
+		return bodyContent.toString();
 	}
 	
 }
