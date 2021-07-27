@@ -4,5 +4,6 @@ public enum ReimbursementTypes {
 	MOVING,
 	PARKING,
 	COMMUTE,
-	BUSINESS
+	BUSINESS,
+	OTHER
 }

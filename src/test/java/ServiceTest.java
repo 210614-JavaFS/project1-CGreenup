@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -80,19 +81,33 @@ public class ServiceTest {
 		log.info("LOGIN TEST: " + user.toString());
 	}
 	
+//	@Test
+//	public void submitRequest() {
+//		log.info("Submitting a new request!");
+//		
+//		User user = impl.getUser("JuneEmployee");
+//		
+//		Reimbursement reimb = new Reimbursement();
+//		reimb.setAmount(794.28);
+//		reimb.setAuthor(user);
+//		reimb.setDescription("Paid for plane ticket");
+//		reimb.setType(ReimbursementTypes.BUSINESS);
+//		
+//		assertTrue(reimbImpl.submitRequest(reimb));
+//	}
+	
 	@Test
-	public void submitRequest() {
-		log.info("Submitting a new request!");
+	public void getUserRequestTest() {
+		log.info("List of JuneEmployee's requests");
 		
-		User user = impl.getUser("JuneEmployee");
+		User user = impl.getUser("employee@email.com");
 		
-		Reimbursement reimb = new Reimbursement();
-		reimb.setAmount(250);
-		reimb.setAuthor(user);
-		reimb.setDescription("Money to help pay for a moving truck");
-		reimb.setType(ReimbursementTypes.MOVING);
+		List<Reimbursement> list = reimbImpl.getUsersRequests(user);
 		
-		assertTrue(reimbImpl.submitRequest(reimb));
+		for(Reimbursement r : list) {
+			System.out.println(r);
+			log.info(r.toString());
+		}
 	}
 	
 	

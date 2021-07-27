@@ -50,6 +50,13 @@ public class Reimbursement {
 	public void setResolver(User resolver) 				{ this.resolver = resolver;				}
 	public void setStatus(ReimbursementStatus status) 	{ this.status = status;					}
 	public void setType(ReimbursementTypes type) 		{ this.type = type;						}
+
+	@Override
+	public String toString() {
+		return "Reimbursement [id=" + id + ", amount=" + amount + ", dateSubmitted=" + dateSubmitted + ", dateResolved="
+				+ dateResolved + ", description=" + description + ", author=" + author + ", resolver=" + resolver
+				+ ", status=" + status + ", type=" + type + "]";
+	}
 	
 	
 }
