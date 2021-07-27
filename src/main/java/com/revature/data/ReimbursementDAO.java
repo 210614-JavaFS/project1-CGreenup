@@ -1,7 +1,7 @@
 package com.revature.data;
 
-import com.revature.models.User;
+import com.revature.models.Reimbursement;
 
 public interface ReimbursementDAO {
-	public boolean submitRequest(User user);
+	public boolean submitRequest(Reimbursement form);
 }

@@ -10,14 +10,18 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.data.ReimbursementDAOImpl;
 import com.revature.data.UserDAOImpl;
+import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementTypes;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import com.revature.utils.ConnectionUtil;
 
 public class ServiceTest {
 	static Logger log = LoggerFactory.getLogger(ServiceTest.class);
-	
+	UserDAOImpl impl = new UserDAOImpl();
+	ReimbursementDAOImpl reimbImpl = new ReimbursementDAOImpl();
 	
 	@BeforeAll
 	public static void denoteBeginningInLog() {
@@ -53,12 +57,11 @@ public class ServiceTest {
 	
 	@Test
 	public void getUserTest() {
-		UserDAOImpl impl = new UserDAOImpl();
 		
 		User user1 = impl.getUser("JuneAdmin");
 		log.info(user1.toString());
 		
-		User user2 = impl.getUser("example@email.com");
+		User user2 = impl.getUser("admin@email.com");
 		log.info(user2.toString());
 		
 		assertEquals(user1, user2);
@@ -76,6 +79,22 @@ public class ServiceTest {
 		
 		log.info("LOGIN TEST: " + user.toString());
 	}
+	
+	@Test
+	public void submitRequest() {
+		log.info("Submitting a new request!");
+		
+		User user = impl.getUser("JuneEmployee");
+		
+		Reimbursement reimb = new Reimbursement();
+		reimb.setAmount(250);
+		reimb.setAuthor(user);
+		reimb.setDescription("Money to help pay for a moving truck");
+		reimb.setType(ReimbursementTypes.MOVING);
+		
+		assertTrue(reimbImpl.submitRequest(reimb));
+	}
+	
 	
 	@AfterAll
 	public static void denoteEndOfTesting() {

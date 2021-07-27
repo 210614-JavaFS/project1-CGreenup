@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			//This is where SQL injection is checked for.
-			statement.setString(1, identifier);
+			statement.setString(1, identifier.toLowerCase());
 			
 			ResultSet result = statement.executeQuery();
 			
