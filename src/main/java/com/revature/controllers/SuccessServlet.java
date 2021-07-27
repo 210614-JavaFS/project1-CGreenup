@@ -15,6 +15,11 @@ import com.revature.services.UserService;
 
 public class SuccessServlet extends HttpServlet{
 	
+//	@Override
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		doPost(req, resp);
+//	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
@@ -30,6 +35,7 @@ public class SuccessServlet extends HttpServlet{
 			pw.print("<div class = \"alert alert-danger\">"
 					+ "<strong>PLEASE RETURN TO HOME PAGE</strong>"
 					+ "</div>");
+			ToHome.execute(resp);
 		} else {
 			//DEBUG
 			UserService.getUserService();

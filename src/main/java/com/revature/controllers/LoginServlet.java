@@ -21,6 +21,24 @@ public class LoginServlet extends HttpServlet{
 	private static Logger log = LoggerFactory.getLogger(LoginServlet.class);
 	
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(false);
+		resp.setContentType("text/html");
+		PrintWriter pw = resp.getWriter();
+		
+		pw.print("<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" "
+				+ "rel=\"stylesheet\" integrity=\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\" "
+				+ "crossorigin=\"anonymous\">");
+		
+		
+		pw.print("<div class = \"alert alert-danger\">"
+				+ "<strong>PLEASE RETURN TO HOME PAGE</strong>"
+				+ "</div>");
+		ToHome.execute(resp);
+		
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		log.info("Made it to doPost");
 		System.out.println("made it to doPost");
