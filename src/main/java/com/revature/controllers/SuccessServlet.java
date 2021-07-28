@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +19,30 @@ import com.revature.services.UserService;
 
 public class SuccessServlet extends HttpServlet{
 	
-//	@Override
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		doPost(req, resp);
-//	}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		response.setContentType("text/html");
+		PrintWriter pw = response.getWriter();
+		
+		if(session != null) {
+			String userIdentifier = request.getParameter("username");
+			session.setAttribute("username", userIdentifier);
+			
+			doPost(request, response);
+		}else {
+			
+			pw.print("<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" "
+					+ "rel=\"stylesheet\" integrity=\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\" "
+					+ "crossorigin=\"anonymous\">");
+			
+			
+			pw.print("<div class = \"alert alert-danger\">"
+					+ "<strong>PLEASE RETURN TO HOME PAGE</strong>"
+					+ "</div>");
+			ToHome.execute(response);
+		}
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,6 +76,14 @@ public class SuccessServlet extends HttpServlet{
 	}
 	
 	protected void displayEmployeeScreen(User user, PrintWriter pw) {
+		setEmployeeStylesheet(pw);
+		
+		addChangeViewScript(pw);
+		
+		displayEmployeeHTML(user, pw);
+	}
+
+	private void setEmployeeStylesheet(PrintWriter pw) {
 		pw.print("<style>"
 				+ "#mainDiv{\r\n"
 				+ "  margin: 20px;\r\n"
@@ -76,17 +105,19 @@ public class SuccessServlet extends HttpServlet{
 				+ "  padding-left: 8px;\r\n"
 				+ "}"
 				+ "</style>");
-		
-		pw.print("<div id='mainDiv'>\r\n"
-				+ "  <div align='right'>\r\n"
-				+ "    <form action = 'logout'>\r\n"
-				+ "      <button class=\"btn btn-primary\" id='logoutBtn' type = 'submit'>Sign out</button>\r\n"
-				+ "    </form>\r\n"
-				+ "  </div>\r\n"
+	}
+
+	private void displayEmployeeHTML(User user, PrintWriter pw) {
+		pw.print("<div align='right' style='margin-right:10px; margin-top:10px;'>\r\n"
+				+ "  <form action = 'logout'>\r\n"
+				+ "    <button class=\"btn btn-primary\" id='logoutBtn'>Sign out</button>\r\n"
+				+ "  </form>\r\n"
+				+ "</div>"
+				+ "<div id='mainDiv'>\r\n"
 				+ "  <h2>Welcome, " + user.getFirstName() + "</h2>\r\n"
 				+ "  \r\n"
 				+ "  <form action = 'newRequest' >\r\n"
-				+ "    <button id='newReq' class = \"btn btn-outline-secondary\" type = 'submit'>Create New Request</button>\r\n"
+				+ "    <button id='newReq' class = \"btn btn-outline-secondary\" onclick=clearAll()>Create New Request</button>\r\n"
 				+ "  </form>\r\n"
 				+ "  \r\n"
 				+ "  <div id='tableDiv'>\r\n"
@@ -106,7 +137,20 @@ public class SuccessServlet extends HttpServlet{
 				+ "    </tbody>\r\n"
 				+ "  </table>\r\n"
 				+ "  </div>\r\n"
-				+ "</div>");
+				+ "</div>"
+				+ " <script src='myscripts.js'></script> ");
+	}
+
+	private void addChangeViewScript(PrintWriter pw) {
+		pw.print("<script>"
+				+ "function clearAll() {"
+				+ "	var div = document.getElementById('mainDiv');"
+				+ "	while(div.firstChild){"
+				+ "		div.removeChild(div.firstChild);"
+				+ "	}"
+				+ "}"
+				+ ""
+				+ "</script>");
 	}
 	
 	private String getRequests(User user) {

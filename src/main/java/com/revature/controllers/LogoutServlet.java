@@ -14,18 +14,18 @@ import org.slf4j.LoggerFactory;
 public class LogoutServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Logger log = LoggerFactory.getLogger(LogoutServlet.class);
 		log.info("logging out");
 		System.out.println("logging out");
 		
-		HttpSession session = req.getSession(false);
+		HttpSession session = request.getSession(false);
 		
 		if(session!=null) {
 			session.invalidate();
 		}
 		
-		ToHome.execute(resp);
+		ToHome.execute(response);
 		
 	}
 	
