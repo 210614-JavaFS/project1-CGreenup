@@ -58,5 +58,18 @@ public class Reimbursement {
 				+ ", status=" + status + ", type=" + type + "]";
 	}
 	
+	public static ReimbursementTypes stringToType(String input) {
+		switch(input.strip().toUpperCase().toString()) {
+		case "MOVING":
+			return ReimbursementTypes.MOVING;
+		case "BUSINESS":
+			return ReimbursementTypes.BUSINESS;
+		case "COMMUTE":
+			return ReimbursementTypes.COMMUTE;
+		default :
+			return ReimbursementTypes.OTHER;
+		}
+	}
+	
 	
 }

@@ -37,6 +37,15 @@
   	<url-pattern>/logout</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>NewForm</servlet-name>
+  	<servlet-class>com.revature.controllers.NewReimbursementRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>NewForm</servlet-name>
+  	<url-pattern>/new-request</url-pattern>
+  </servlet-mapping>
+  
   
   
 </web-app>
