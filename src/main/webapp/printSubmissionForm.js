@@ -13,7 +13,7 @@ reimbForm.method = 'post';
 //Select Label
 let label = document.createElement('label');
 label.innerHTML = 'Reimbursement Type';
-formDiv.appendChild(label);
+reimbForm.appendChild(label);
 
 //Select
 let selectForm = document.createElement('select');
@@ -53,6 +53,7 @@ formDiv.appendChild(label);
 input = document.createElement('input');
 input.type = 'text';
 input.id = 'description';
+input.name = 'description';
 input.className = 'form-control';
 input.placeholder = 'Description';
 input.required = 'true';
@@ -66,11 +67,17 @@ let button = document.createElement('button');
 button.id = 'okButton';
 button.className = 'btn form-control btn-secondary';
 button.disabled = 'true';
+button.type = 'submit';
 button.innerHTML = 'Submit';
 formDiv.appendChild(button);
 
 function showForm(){
     mainDiv.appendChild(formDiv);
+    input = document.createElement('input');
+    input.value = user;
+    input.disabled = 'true';
+    reimbForm.appendChild(input);
+
 }
 
 function clearAll(username) {
@@ -78,8 +85,8 @@ function clearAll(username) {
     while(div.firstChild){
         div.removeChild(div.firstChild);
     }
-    showForm();
     setUser(username);
+    showForm();
 }
 
 const inputRegex = /^\d+(\.\d{1,2})?$/;
