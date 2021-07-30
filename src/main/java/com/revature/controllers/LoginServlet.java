@@ -24,31 +24,8 @@ public class LoginServlet extends HttpServlet{
 	private static Logger log = LoggerFactory.getLogger(LoginServlet.class);
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		response.setContentType("text/html");
-		PrintWriter pw = response.getWriter();
-		
-		if(session != null) {
-			new LogoutServlet().doGet(request, response);
-		}else {
-
-			
-			pw.print("<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" "
-					+ "rel=\"stylesheet\" integrity=\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\" "
-					+ "crossorigin=\"anonymous\">");
-			
-			
-			pw.print("<div class = \"alert alert-danger\">"
-					+ "<strong>PLEASE RETURN TO HOME PAGE</strong>"
-					+ "</div>");
-			ToHome.execute(response);
-		}
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.setContentType("application/json");
+		response.setContentType("application/json");
 				
 		log.info("Made it to doPost");
 		System.out.println("made it to doPost");
@@ -66,6 +43,7 @@ public class LoginServlet extends HttpServlet{
 		String body = new String(stringBuilder);		
 		user = objectMapper.readValue(body, User.class);
 		
+		//DEBUG
 		System.out.println(user.toString());
 		
 		UserService.getUserService();
@@ -77,39 +55,19 @@ public class LoginServlet extends HttpServlet{
 		int loginStatus = UserService.login(user);
 		response.setStatus(loginStatus);
 		
-		System.out.println(loginStatus);
-
+		if (loginStatus == 200 || loginStatus == 201) {
+			UserService.getUserService();
+			
+			//We need the rest of the user's info, as well as ensure that
+			//the email is not in the username spot
+			//So we call the service to fix and fill all fields
+			user = UserService.getUser(user.getUsername());
+			
+			String json = objectMapper.writeValueAsString(user);
+			response.getWriter().print(json);
+		}
 		
-//		if(loginStatus == 0) {
-//			log.info("Login success");
-//			System.out.println("Login Success!");
-//						
-//			session.setAttribute("username", userIdentifier);
-//			
-//			reqDispatcher = request.getRequestDispatcher("success");
-//			reqDispatcher.forward(request, response);
-//			
-//		}
-//		//If the username has the error
-//		else if(loginStatus == 1) {
-//			log.error("ERROR: Username not found");
-//			System.out.println("ERROR: Username not found");
-//			session.setAttribute("problemArea", "username");
-//			
-//			reqDispatcher = request.getRequestDispatcher("/");
-//			reqDispatcher.forward(request, response);
-//		}
-//		//Otherwise, if the password has the error
-//		else if(loginStatus == 2){
-//			log.error("ERROR: Password does not match");
-//			System.out.println("ERROR: Password does not match");
-//			session.setAttribute("problemArea", "password");
-//		}
-//		else {
-//			log.error("ERROR: Something really bad has happened when attempting to log in.");
-//			System.out.println("ERROR: Something really bad has happened when attempting to log in.");
-//			session.setAttribute("problemArea", "usernamepassword");
-//		}
-		
+		//DEBUG
+		System.out.println(loginStatus);		
 	}
 }

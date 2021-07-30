@@ -1,4 +1,3 @@
-let user;
 //formDiv
 let formDiv = document.createElement('div');
 formDiv.id = 'formDiv'
@@ -72,24 +71,23 @@ button.innerHTML = 'Submit';
 reimbForm.appendChild(button);
 
 function showForm(){
-        let mainDiv = document.getElementById('mainDiv');
-input = document.createElement('input');
-input.value = user;
-      input.name = 'username';
-     input.type = 'hidden';
-reimbForm.appendChild(input);
-      formDiv.appendChild(reimbForm);
-    mainDiv.appendChild(formDiv);
-         signUpForm = document.getElementById('signUpForm');
-           dollarAmount = document.getElementById('dollarAmount');
-      descriptionField = document.getElementById('description');
-     okButton = document.getElementById('okButton');
-
+  let mainDiv = document.getElementById('mainDiv');
+  input = document.createElement('input');
+  input.value = user;
+  input.name = 'username';
+  input.type = 'hidden';
+  reimbForm.appendChild(input);
+  formDiv.appendChild(reimbForm);
+  mainDiv.appendChild(formDiv);
+  signUpForm = document.getElementById('signUpForm');
+  dollarAmount = document.getElementById('dollarAmount');
+  descriptionField = document.getElementById('description');
+  okButton = document.getElementById('okButton');
   descriptionField.addEventListener('keyup', validateForm);
   dollarAmount.addEventListener('keyup', validateForm);
 }
 
-function clearAll(username) {
+function newForm(username) {
     var div = document.getElementById('mainDiv');
     while(div.firstChild){
         div.removeChild(div.firstChild);

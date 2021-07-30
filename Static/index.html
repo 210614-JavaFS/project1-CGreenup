@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="EriStyleSheet.css">
     </head>
     
-    <body>
+    <body id = 'bodyId'>
         <div id='mainDiv'>
             <!--Title-->
             <div id = "titleDiv" align="center">
@@ -25,12 +25,12 @@
                 <!--Username input field-->
                 <label for = "inputName">Username or Email:</label>
                 <input class = "form-control" type = "text" id = "inputName" placeholder = "Username or Email">
-                <p id ='usernameError'></p>
+                <p id ='usernameError' class = 'text-danger'></p>
                 
                 <!--Password Input field-->
                 <label for = "inputPassword">Password</label>
                 <input class = "form-control" type = "password" id = "inputPassword" placeholder = "Password">
-                <p id ='passwordError'></p>
+                <p id ='passwordError' class = 'text-danger'></p>
                 <!--Submit button-->
                 <button id = "submitButton" class="btn btn-outline-primary form-control" >Submit</button>
             </div>

@@ -13,7 +13,9 @@ let iUsername;
 let iPassword;
 
 let usernameField = document.getElementById('inputName');
+let usernameDangertext = document.getElementById('usernameError');
 let passwordField = document.getElementById('inputPassword');
+let passwordDangertext = document.getElementById('passwordError');
 let button = document.getElementById('submitButton');
 
 function getInputFields(){
@@ -39,6 +41,7 @@ async function attemptLogin(){
 
   if(response.status === 201){
     console.log("success, user is Employee");
+    firstName = 'Junp';
     showEmployeeMenu(username);
 
   }else if (response.status == 200) {
@@ -47,10 +50,13 @@ async function attemptLogin(){
   else if(response.status === 203){
     console.log("username incorrect");
     invalidate(usernameField);
+    invalidate(passwordField);
+    usernameDangertext.innerHTML = 'Username or Email does not exist';
   }
   else if (response.status === 204){
     console.log("username correct, password incorrect");
     invalidate(passwordField);
+    passwordDangertext.innerHTML = 'Password does not match';
   }
   else{
     console.log("ERROR: I DON'T KNOW WHAT HAPPENED :(");
@@ -64,6 +70,9 @@ button.onclick = attemptLogin;
 function clearLoginForm(){
   usernameField.className = 'form-control';
   passwordField.className = 'form-control';
+  usernameDangertext.innerHTML = '';
+  passwordDangertext.innerHTML = '';
+
 }
 
 function invalidate(inputField){

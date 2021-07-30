@@ -24,10 +24,6 @@ public class NewReimbursementRequestServlet extends HttpServlet {
 		ReimbursementTypes type = Reimbursement.stringToType(req.getParameter("selectForm"));
 		ReimbService.getReimbService();
 		ReimbService.addReimbRequest(user, amount, type, description);
-		
-		req.setAttribute("username", user.getUsername());
-		//req.setAttribute("inputPassword", user.getPassword());
-		RequestDispatcher dispatcher = req.getRequestDispatcher("success");
-		dispatcher.forward(req, resp);
 	}
 }
+ 
