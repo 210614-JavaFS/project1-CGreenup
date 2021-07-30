@@ -62,7 +62,7 @@ reimbForm.appendChild(input);
 label = document.createElement('label');
 reimbForm.appendChild(label);
 
-let button = document.createElement('button');
+button = document.createElement('button');
 button.id = 'okButton';
 button.className = 'btn form-control btn-success';
 button.disabled = 'true';

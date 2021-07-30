@@ -81,12 +81,6 @@ function showEmployeeMenu(){
 
     tableDiv.appendChild(table);
     div.appendChild(tableDiv);
-
-    let thisScript = document.createElement('script');
-    thisScript.src = 'printSubmissionForm.js';
-    let body = document.getElementById('bodyId');
-    body.appendChild(thisScript);
-
 }
 
 async function populateTable(){
@@ -95,5 +89,5 @@ async function populateTable(){
 
 function newForm(){
     clearAll();
-    showForm();
+    setupFormScript();
 }

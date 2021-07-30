@@ -1,4 +1,4 @@
-
+"use strict";
 
 const URL = "http://localhost:8080/project1/"
 let div = document.getElementById('mainDiv');
@@ -41,7 +41,7 @@ async function attemptLogin(){
 
   if(response.status === 201){
     console.log("success, user is Employee");
-    firstName = 'Junp';
+    firstName = 'GET USERNAME IN EriJS';
     showEmployeeMenu(username);
 
   }else if (response.status == 200) {
