@@ -11,33 +11,37 @@
     </head>
     
     <body>
-        <!--Title-->
-        <div id = "titleDiv" align="center">
-            <h2>Welcome to the</h2>
-            <h2 class = "display-4" style = "text-decoration: underline">
-                Employee Reimbursement System
-            </h2>
-        </div>
+        <div id='mainDiv'>
+            <!--Title-->
+            <div id = "titleDiv" align="center">
+                <h2>Welcome to the</h2>
+                <h2 class = "display-4" style = "text-decoration: underline">
+                    Employee Reimbursement System
+                </h2>
+            </div>
 
-        <!--Login Form-->
-        <div class = "form-group " id = "formDiv">
-            <form action = "login" method="post">
-                
-                <!--Username input field-->
-                <label for = "inputName">Username or Email:</label>
-                <input class = "form-control" type = "text" name = "inputName" placeholder = "Username or Email">
-                <p id ='usernameError'></p>
-                
-                <!--Password Input field-->
-                <label for = "inputPassword">Password</label>
-                <input class = "form-control" type = "password" name = "inputPassword" placeholder = "Password">
-            	<p id ='passwordError'></p>
-            	<!--Submit button-->
-                <input id = "submitButton" class="btn btn-outline-primary form-control" type = "submit" value = "Submit"/>
-                
-            </form>
+            <!--Login Form-->
+            <div class = "form-group " id = "formDiv">
+                <form>
+                    
+                    <!--Username input field-->
+                    <label for = "inputName">Username or Email:</label>
+                    <input class = "form-control" type = "text" name = "inputName" placeholder = "Username or Email">
+                    <p id ='usernameError'></p>
+                    
+                    <!--Password Input field-->
+                    <label for = "inputPassword">Password</label>
+                    <input class = "form-control" type = "password" name = "inputPassword" placeholder = "Password">
+                    <p id ='passwordError'></p>
+                    <!--Submit button-->
+                    <input id = "submitButton" class="btn btn-outline-primary form-control" type = "submit" value = "Submit"/>
+                    
+                </form>
+            </div>
         </div>
-                
+        
+    <script src="EriJS.js"/>
+    
     </body>
 
 </html>

@@ -1,24 +1,16 @@
-const inputRegex = /^\d+(\.\d{1,2})?$/;
-  const signUpForm = document.getElementById('signUpForm');
-  const dollarAmount = document.getElementById('dollarAmount')
-  const descriptionField = document.getElementById('description');
-  const okButton = document.getElementById('okButton');
-  let user;
+const URL = "http://localhost:8080/project1/"
 
-  descriptionField.addEventListener('keyup', validateForm);
-  dollarAmount.addEventListener('keyup', validateForm);
-  
-    function setUser(username){
-        user = username;
-    }
-
-  function validateForm() {
-    descriptionNotEmpty = descriptionField.checkValidity();
-    dollarAmountIsValid = inputRegex.test(dollarAmount.value)
-
-    if ( descriptionNotEmpty && dollarAmountIsValid) {
-      okButton.disabled = false;
-    } else {
-      okButton.disabled = true;
-    }
+function clearAll() {
+  var div = document.getElementById('mainDiv');
+  while(div.firstChild){
+      div.removeChild(div.firstChild);
   }
+}
+
+let usernameField = document.getElementById('inputName');
+let passwordField = document.getElementById('inputPassword')
+let submitButton = document.getElementById('submitButton');
+
+function attemptLogin(){
+
+}
