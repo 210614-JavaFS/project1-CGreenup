@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
 public class LoginServlet extends HttpServlet{
 	
+	private ObjectMapper objectMapper = new ObjectMapper();
 	private static Logger log = LoggerFactory.getLogger(LoginServlet.class);
 	
 	@Override
@@ -45,57 +48,73 @@ public class LoginServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		response.setContentType("application/json");
+				
 		log.info("Made it to doPost");
 		System.out.println("made it to doPost");
 		
 		User user = new User();
+		BufferedReader reader = request.getReader();
+		StringBuilder stringBuilder = new StringBuilder();
+		String line = reader.readLine();
+	
+		while (line != null) {
+			stringBuilder.append(line);
+			line = reader.readLine();
+		}
 		
-		String userIdentifier = request.getParameter("inputName");
-		String password = request.getParameter("inputPassword");
-		
-		user.setUsername(userIdentifier);
-		user.setPassword(password);
-				
-		System.out.println("Username: " + userIdentifier);
-		System.out.println("Password: " + password);
+		String body = new String(stringBuilder);		
+		user = objectMapper.readValue(body, User.class);
 		
 		UserService.getUserService();
 		int loginStatus = UserService.login(user);
 		
-		RequestDispatcher reqDispatcher = null;
-		PrintWriter pw = response.getWriter();
-		HttpSession session = request.getSession();
+		System.out.println(loginStatus);
 		
-		if(loginStatus == 0) {
-			log.info("Login success");
-			System.out.println("Login Success!");
-						
-			session.setAttribute("username", userIdentifier);
-			
-			reqDispatcher = request.getRequestDispatcher("success");
-			reqDispatcher.forward(request, response);
-			
+		switch(loginStatus) {
+		case 0:
+			response.setStatus(201);
+			break;
+		case 1:
+			response.setStatus(203);
+			break;
+		case 2:
+			response.setStatus(204);
+			break;
+		default:
+			response.setStatus(405);
+			break;
 		}
-		//If the username has the error
-		else if(loginStatus == 1) {
-			log.error("ERROR: Username not found");
-			System.out.println("ERROR: Username not found");
-			session.setAttribute("problemArea", "username");
-			
-			reqDispatcher = request.getRequestDispatcher("/");
-			reqDispatcher.forward(request, response);
-		}
-		//Otherwise, if the password has the error
-		else if(loginStatus == 2){
-			log.error("ERROR: Password does not match");
-			System.out.println("ERROR: Password does not match");
-			session.setAttribute("problemArea", "password");
-		}
-		else {
-			log.error("ERROR: Something really bad has happened when attempting to log in.");
-			System.out.println("ERROR: Something really bad has happened when attempting to log in.");
-			session.setAttribute("problemArea", "usernamepassword");
-		}
+//		if(loginStatus == 0) {
+//			log.info("Login success");
+//			System.out.println("Login Success!");
+//						
+//			session.setAttribute("username", userIdentifier);
+//			
+//			reqDispatcher = request.getRequestDispatcher("success");
+//			reqDispatcher.forward(request, response);
+//			
+//		}
+//		//If the username has the error
+//		else if(loginStatus == 1) {
+//			log.error("ERROR: Username not found");
+//			System.out.println("ERROR: Username not found");
+//			session.setAttribute("problemArea", "username");
+//			
+//			reqDispatcher = request.getRequestDispatcher("/");
+//			reqDispatcher.forward(request, response);
+//		}
+//		//Otherwise, if the password has the error
+//		else if(loginStatus == 2){
+//			log.error("ERROR: Password does not match");
+//			System.out.println("ERROR: Password does not match");
+//			session.setAttribute("problemArea", "password");
+//		}
+//		else {
+//			log.error("ERROR: Something really bad has happened when attempting to log in.");
+//			System.out.println("ERROR: Something really bad has happened when attempting to log in.");
+//			session.setAttribute("problemArea", "usernamepassword");
+//		}
 		
 	}
 }
