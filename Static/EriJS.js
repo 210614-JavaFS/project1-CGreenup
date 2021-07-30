@@ -9,24 +9,25 @@ function clearAll() {
   }
 }
 
-let username;
-let password;
+let iUsername;
+let iPassword;
 
 let usernameField = document.getElementById('inputName');
 let passwordField = document.getElementById('inputPassword');
 let button = document.getElementById('submitButton');
 
 function getInputFields(){
-  let inputUsername = usernameField.value;
-  let inputPassword = passwordField.value;
+  iUsername = usernameField.value;
+  iPassword = passwordField.value;
   let user = {
-    username: (inputUsername? inputUsername : ""),
-    password: (inputPassword? inputPassword : "")
+    username: (iUsername? iUsername : ""),
+    password: (iPassword? iPassword : "")
   };
 
   return user;
 };
 async function attemptLogin(){
+  clearLoginForm();
   let input = getInputFields();
   let response = await fetch(URL + 'login', {
     method:'POST',
@@ -36,8 +37,35 @@ async function attemptLogin(){
 
   console.log(response.status);
 
+  if(response.status === 201){
+    console.log("success, user is Employee");
+    showEmployeeMenu(username);
+
+  }else if (response.status == 200) {
+    console.log("success, user is Finance Manager")
+  }
+  else if(response.status === 203){
+    console.log("username incorrect");
+    invalidate(usernameField);
+  }
+  else if (response.status === 204){
+    console.log("username correct, password incorrect");
+    invalidate(passwordField);
+  }
+  else{
+    console.log("ERROR: I DON'T KNOW WHAT HAPPENED :(");
+  }
   //clearAll();
 
 };
 
 button.onclick = attemptLogin;
+
+function clearLoginForm(){
+  usernameField.className = 'form-control';
+  passwordField.className = 'form-control';
+}
+
+function invalidate(inputField){
+  inputField.className = 'form-control is-invalid'
+}

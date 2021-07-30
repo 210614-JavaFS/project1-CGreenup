@@ -11,6 +11,7 @@ import com.revature.data.UserDAO;
 import com.revature.data.UserDAOImpl;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import com.revature.models.UserRoles;
 
 
 public class UserService {
@@ -30,16 +31,20 @@ public class UserService {
 		
 		//If the user does not exist in the database, the user object will be null
 		if (user == null) {
-			return 1;
+			return 203;
 		}
 		
 		//Since the user does exist in the database:
 		//Check if the password obtained from the database has the same encryption hash as the password that was inputted
-		if(user.getPassword().equals(originalPassword))
-			return 0;
+		if(user.getPassword().equals(originalPassword)) {
+			if(user.getUserType() == UserRoles.MANAGER) 
+				return 200;
+			return 201;
+		}
+			
 		
 		//If the password didn't match, return a password didn't match status code
-		return 2;
+		return 204;
 	}
 
 	public static User getUser(String userIdentifier) {

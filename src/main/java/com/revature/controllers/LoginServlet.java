@@ -66,25 +66,20 @@ public class LoginServlet extends HttpServlet{
 		String body = new String(stringBuilder);		
 		user = objectMapper.readValue(body, User.class);
 		
+		System.out.println(user.toString());
+		
 		UserService.getUserService();
+		
+		//200 User info correct and user is Finance Manager
+		//201 user info correct and user is Employee
+		//203 Username does not exist in database
+		//204 Password does not match username/general error
 		int loginStatus = UserService.login(user);
+		response.setStatus(loginStatus);
 		
 		System.out.println(loginStatus);
+
 		
-		switch(loginStatus) {
-		case 0:
-			response.setStatus(201);
-			break;
-		case 1:
-			response.setStatus(203);
-			break;
-		case 2:
-			response.setStatus(204);
-			break;
-		default:
-			response.setStatus(405);
-			break;
-		}
 //		if(loginStatus == 0) {
 //			log.info("Login success");
 //			System.out.println("Login Success!");
