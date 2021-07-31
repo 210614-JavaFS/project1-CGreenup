@@ -93,5 +93,6 @@ function showForm(){
 
 async function submitForm(){
 
-    return false;
+    showEmployeeMenu();
+    iUsername = username;
 }
