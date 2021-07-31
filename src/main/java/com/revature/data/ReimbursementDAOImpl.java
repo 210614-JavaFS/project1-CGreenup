@@ -18,6 +18,7 @@ import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementTypes;
 import com.revature.models.User;
+import com.revature.services.UserService;
 import com.revature.utils.ConnectionUtil;
 
 public class ReimbursementDAOImpl implements ReimbursementDAO {
@@ -74,6 +75,10 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 					+ "ORDER BY r.REIMB_SUBMITTED DESC;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			UserService.getUserService();
+			
+			user = UserService.getUser(user.getUsername());
 			
 			statement.setInt(1, user.getUserId());
 			

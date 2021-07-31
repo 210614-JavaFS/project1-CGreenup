@@ -81,6 +81,8 @@ function showEmployeeMenu(){
 
     tableDiv.appendChild(table);
     div.appendChild(tableDiv);
+
+    putData();
 }
 
 async function putData(){
@@ -89,24 +91,26 @@ async function putData(){
     }
 
     let response = await fetch(URL + 'requests', {
-        method:'GET',
-        body:JSON.stringify()
+        method:'POST',
+        body:JSON.stringify(userObject)
     })
 
     console.log(JSON.stringify(userObject));
     
     if(response.status === 200){
         let data = await response.json();
-        console.log(data);
-        //populateTable(data);
+        populateTable(data);
     }else{
         console.log('This user has no previous submissions')
     }
 }
 
 function populateTable(data){
-    let tbody = document.getElementById('tbody');
+    let tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
+    for(let req in data){
+        let row = document.createElement('tr');
+    }
 }
 
 function newForm(){
