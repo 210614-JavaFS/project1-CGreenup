@@ -29,7 +29,7 @@ function showEmployeeMenu(){
     button = document.createElement('button');
     button.id = 'newReq';
     button.className = 'btn btn-outline-secondary form-control';
-    button.onclick = putData;
+    button.onclick = newForm;
     button.innerHTML = 'Create New Request';
 
     div.appendChild(button);
@@ -99,6 +99,8 @@ async function putData(){
     
     if(response.status === 200){
         let data = await response.json();
+
+        console.log(data);
         populateTable(data);
     }else{
         console.log('This user has no previous submissions')
@@ -108,8 +110,47 @@ async function putData(){
 function populateTable(data){
     let tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
-    for(let req in data){
+    for(let i = 0; i < data.length ; i++){
+        let req = data[i];
         let row = document.createElement('tr');
+
+        //Fill in ID field
+        let td = document.createElement('td');
+        td.innerText = req.id;
+        row.appendChild(td);
+
+        console.log(req.id + " " + typeof req.id)
+
+        //Fill in description using the TYPE and the Description String
+        td = document.createElement('td');
+        td.innerText = req.type + ": " + req.description;
+        row.appendChild(td);
+
+        //Fill in the amount requested
+        td = document.createElement('td');
+        td.innerText = "$" + req.amount;
+        row.appendChild(td);
+        
+        //Fill in the status
+        //Color the box depending on status
+        td = document.createElement('td');
+        let status = req.status
+        td.innerText = status;
+        switch(status){
+            case "PENDING":
+                td.className = "bg-warning";
+                break;
+            case "APPROVED":
+                td.className = "bg-success";
+                break;
+            case "DENIED":
+                td.className = "bg-danger";
+                break;
+        }
+        row.appendChild(td);
+
+        tbody.appendChild(row);
+
     }
 }
 
