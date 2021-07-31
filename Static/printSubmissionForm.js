@@ -74,11 +74,6 @@ reimbForm.appendChild(button);
 function showForm(){
     setUser(username);
     let mainDiv = document.getElementById('mainDiv');
-    input = document.createElement('input');
-    input.value = user;
-    input.name = 'username';
-    input.type = 'hidden';
-    reimbForm.appendChild(input);
     formDiv.appendChild(reimbForm);
     mainDiv.appendChild(formDiv);
     signUpForm = document.getElementById('signUpForm');
@@ -89,9 +84,22 @@ function showForm(){
     dollarAmount.addEventListener('keyup', validateForm);
 }
 
-
+function getReqFields(){
+    return {
+        amount:dollarAmount.value,
+        author:username,
+        description:descriptionField.value,
+        type:selectForm.value
+    }
+}
 
 async function submitForm(){
+    let info = getReqFields();
+
+    let response = await fetch(URL + "new-request", {
+        method:'POST',
+        body: JSON.stringify(info)
+    })
 
     showEmployeeMenu();
     iUsername = username;

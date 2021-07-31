@@ -11,6 +11,7 @@ function showEmployeeMenu(){
     logoutButton.className = 'btn btn-primary';
     logoutButton.id='logoutBtn';
     logoutButton.innerHTML = 'Sign Out';
+    logoutButton.onclick = () =>{location.reload(true)}
 
     let logoutDiv = document.createElement('div');
     logoutDiv.align = 'right';
