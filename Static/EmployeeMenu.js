@@ -29,7 +29,7 @@ function showEmployeeMenu(){
     button = document.createElement('button');
     button.id = 'newReq';
     button.className = 'btn btn-outline-secondary form-control';
-    button.onclick = newForm;
+    button.onclick = putData;
     button.innerHTML = 'Create New Request';
 
     div.appendChild(button);
@@ -83,8 +83,30 @@ function showEmployeeMenu(){
     div.appendChild(tableDiv);
 }
 
-async function populateTable(){
+async function putData(){
+    let userObject = {
+        username: username
+    }
 
+    let response = await fetch(URL + 'requests', {
+        method:'GET',
+        body:JSON.stringify()
+    })
+
+    console.log(JSON.stringify(userObject));
+    
+    if(response.status === 200){
+        let data = await response.json();
+        console.log(data);
+        //populateTable(data);
+    }else{
+        console.log('This user has no previous submissions')
+    }
+}
+
+function populateTable(data){
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
 }
 
 function newForm(){

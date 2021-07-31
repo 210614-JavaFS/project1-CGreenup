@@ -39,9 +39,15 @@ async function attemptLogin(){
 
   console.log(response.status);
 
+  if(response.status === 201 || response.status===200){
+    let data = await response.json();
+    console.log(data);
+    firstName = data.firstName;
+    console.log(firstName);
+  }
+
   if(response.status === 201){
     console.log("success, user is Employee");
-    firstName = 'GET USERNAME IN EriJS';
     showEmployeeMenu(username);
 
   }else if (response.status == 200) {

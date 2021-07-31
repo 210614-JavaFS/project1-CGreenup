@@ -1,12 +1,13 @@
+URL = "http://localhost:8080/project1/";
+
 //formDiv
 let formDiv = document.createElement('div');
 formDiv.id = 'formDiv'
 
 //Form
-let reimbForm = document.createElement('form');
+let reimbForm = document.createElement('span');
 reimbForm.id = 'signUpForm';
-reimbForm.action = 'new-request';
-reimbForm.method = 'post';
+
 
 //Select Label
 let label = document.createElement('label');
@@ -16,7 +17,7 @@ reimbForm.appendChild(label);
 //Select
 let selectForm = document.createElement('select');
 selectForm.id = 'selectForm';
-     selectForm.name = 'selectForm';
+selectForm.name = 'selectForm';
 selectForm.className = 'form-control';
 
 //options
@@ -67,31 +68,30 @@ button.id = 'okButton';
 button.className = 'btn form-control btn-success';
 button.disabled = 'true';
 button.innerHTML = 'Submit';
-      button.type = 'submit';
+button.onclick = submitForm;
 reimbForm.appendChild(button);
 
 function showForm(){
-  let mainDiv = document.getElementById('mainDiv');
-  input = document.createElement('input');
-  input.value = user;
-  input.name = 'username';
-  input.type = 'hidden';
-  reimbForm.appendChild(input);
-  formDiv.appendChild(reimbForm);
-  mainDiv.appendChild(formDiv);
-  signUpForm = document.getElementById('signUpForm');
-  dollarAmount = document.getElementById('dollarAmount');
-  descriptionField = document.getElementById('description');
-  okButton = document.getElementById('okButton');
-  descriptionField.addEventListener('keyup', validateForm);
-  dollarAmount.addEventListener('keyup', validateForm);
+    setUser(username);
+    let mainDiv = document.getElementById('mainDiv');
+    input = document.createElement('input');
+    input.value = user;
+    input.name = 'username';
+    input.type = 'hidden';
+    reimbForm.appendChild(input);
+    formDiv.appendChild(reimbForm);
+    mainDiv.appendChild(formDiv);
+    signUpForm = document.getElementById('signUpForm');
+    dollarAmount = document.getElementById('dollarAmount');
+    descriptionField = document.getElementById('description');
+    okButton = document.getElementById('okButton');
+    descriptionField.addEventListener('keyup', validateForm);
+    dollarAmount.addEventListener('keyup', validateForm);
 }
 
-function newForm(username) {
-    var div = document.getElementById('mainDiv');
-    while(div.firstChild){
-        div.removeChild(div.firstChild);
-    }
-    setUser(username);
-    showForm();
+
+
+async function submitForm(){
+
+    return false;
 }
