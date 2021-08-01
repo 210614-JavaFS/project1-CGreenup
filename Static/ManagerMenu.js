@@ -38,6 +38,8 @@ function showManagerMenu(username){
     filter.id = filterString.toLowerCase() + "Filter";
     filter.type = 'checkbox';
     filter.checked = true;
+    filter.value = true;
+    filter.onchange = refreshTable;
     inlineDiv.appendChild(filter);
     
     let filterLabel = document.createElement('label');
@@ -163,5 +165,56 @@ async function getData(){
         console.log(deniedRequests);
     }
 
+    refreshTable();
     console.log('Finished Async Manager thing');
+}
+
+function populateRequestTable(data, typeString){
+    let tableBody = document.getElementById('tableBody');
+
+    for(let i = 0; i < data.length; i++){
+        let req = data[i];
+        let row = document.createElement('tr');
+
+        //Fill in ID field
+        let td = document.createElement('td');
+        td.innerText = req.id;
+        row.appendChild(td);
+
+        //Fill in description using the TYPE and the Description String
+        td = document.createElement('td');
+        td.innerText = req.description;
+        row.appendChild(td);
+
+        //Fill in the amount requested
+        td = document.createElement('td');
+        td.innerText = "$" + req.amount;
+        row.appendChild(td);
+
+        //Fill in author field
+        td = document.createElement('td');
+        td.innerText = req.name;
+        row.appendChild(td);
+
+        //add the two buttons
+        td = document.createElement('td');
+        row.appendChild(td);
+
+        tableBody.appendChild(row);
+    }
+}
+
+function refreshTable(){
+    let tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = "";
+    if(document.querySelector('#pendingFilter').checked){
+        populateRequestTable(pendingRequests, 'pending');
+    }
+    if (document.querySelector('#approvedFilter').checked){
+        populateRequestTable(approvedRequests, 'approved');
+    }
+    if(document.querySelector('#deniedFilter').checked){
+        populateRequestTable(deniedRequests, 'denied')
+    }
+    
 }

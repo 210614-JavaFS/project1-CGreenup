@@ -124,7 +124,7 @@ function populateTable(data){
         td.innerText = req.id;
         row.appendChild(td);
 
-        console.log(req.id + " " + typeof req.id)
+        console.log(req.id + " " + typeof req.id);
 
         //Fill in description using the TYPE and the Description String
         td = document.createElement('td');
