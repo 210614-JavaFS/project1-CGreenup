@@ -52,6 +52,8 @@ public class UserService {
 	}
 	
 	public static List<Reimbursement> getUsersRequests(User user){
+		log.info("Attempting to get " + user.getFirstName() + "'s submitted requests.");
+		System.out.println("Attempting to get " + user.getFirstName() + "'s submitted requests.");
 		return reimbDAO.getUsersRequests(user);
 	}
 	

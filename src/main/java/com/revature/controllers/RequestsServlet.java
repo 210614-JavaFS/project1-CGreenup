@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.User;
+import com.revature.models.UserRoles;
 import com.revature.services.UserService;
 
 public class RequestsServlet extends HttpServlet {
@@ -39,12 +40,16 @@ public class RequestsServlet extends HttpServlet {
 		System.out.println("body = " + body);
 		User user = objectMapper.readValue(body, User.class);
 		System.out.println(user.toString());
+		UserService.getUserService();
+		user = UserService.getUser(user.getUsername());
 		
-		if(user != null) {
+		if(user.getUserType() == UserRoles.EMPLOYEE) {
 			UserService.getUserService();
 			String json = objectMapper.writeValueAsString(UserService.getUsersRequests(user));
 			response.getWriter().write(json);
 			response.setStatus(200);
+		}else if (user.getUserType() == UserRoles.MANAGER) {
+			
 		}
 	}
 }

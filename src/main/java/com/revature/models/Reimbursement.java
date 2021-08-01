@@ -10,12 +10,14 @@ public class Reimbursement {
 	private String description;
 	//Stretch goal - images for receipts
 	private User author;
+	private String name;
+	
 	private User resolver;
 	private ReimbursementStatus status;
 	private ReimbursementTypes type;
 	
 	public Reimbursement(int id, double amount, Date dateSubmitted, Date dateResolved, String description, User author,
-			User resolver, ReimbursementStatus status, ReimbursementTypes type) {
+			User resolver, ReimbursementStatus status, ReimbursementTypes type, String name) {
 		this.id = id;
 		this.amount = amount;
 		this.dateSubmitted = dateSubmitted;
@@ -25,6 +27,7 @@ public class Reimbursement {
 		this.resolver = resolver;
 		this.status = status;
 		this.type = type;
+		this.name = name;
 	}
 
 	public Reimbursement() {
@@ -40,16 +43,19 @@ public class Reimbursement {
 	public User getResolver() 				{ return resolver;		}
 	public ReimbursementStatus getStatus() 	{ return status;		}
 	public ReimbursementTypes getType() 	{ return type;			}
+	public String getName()					{ return name;			}
 
-	public void setId(int id) 							{ this.id = id;							}
-	public void setAmount(double amount) 				{ this.amount = amount>0?amount:0;		}
-	public void setDateSubmitted(Date dateSubmitted) 	{ this.dateSubmitted = dateSubmitted;	}
-	public void setDateResolved(Date dateResolved) 		{ this.dateResolved = dateResolved;		}
-	public void setDescription(String description) 		{ this.description = description;		}
-	public void setAuthor(User author) 					{ this.author = author;					}
-	public void setResolver(User resolver) 				{ this.resolver = resolver;				}
-	public void setStatus(ReimbursementStatus status) 	{ this.status = status;					}
-	public void setType(ReimbursementTypes type) 		{ this.type = type;						}
+	public void setId(int id) 								{ this.id = id;								}
+	public void setAmount(double amount) 					{ this.amount = amount>0?amount:0;			}
+	public void setDateSubmitted(Date dateSubmitted) 		{ this.dateSubmitted = dateSubmitted;		}
+	public void setDateResolved(Date dateResolved) 			{ this.dateResolved = dateResolved;			}
+	public void setDescription(String description) 			{ this.description = description;			}
+	public void setAuthor(User author) 						{ this.author = author;						}
+	public void setResolver(User resolver) 					{ this.resolver = resolver;					}
+	public void setStatus(ReimbursementStatus status) 		{ this.status = status;						}
+	public void setType(ReimbursementTypes type) 			{ this.type = type;							}
+	public void setName(String name)						{ this.name = name;							}
+	public void setName(String firstName, String lastName)	{ this.name = firstName + " " + lastName;	}
 
 	@Override
 	public String toString() {

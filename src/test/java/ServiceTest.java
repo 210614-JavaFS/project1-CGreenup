@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.revature.data.ReimbursementDAOImpl;
 import com.revature.data.UserDAOImpl;
 import com.revature.models.Reimbursement;
-import com.revature.models.ReimbursementTypes;
+import com.revature.models.ReimbursementStatus;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import com.revature.utils.ConnectionUtil;
@@ -110,6 +111,19 @@ public class ServiceTest {
 		}
 	}
 	
+	@Test
+	public void getRequestByStatusTest() {
+		List<Reimbursement> list = reimbImpl.getReimbursementsOfStatus(ReimbursementStatus.DENIED);
+		
+		log.info("These are all of the pending Requests:");
+		
+		for (Reimbursement r: list) {
+			System.out.println(r.toString());
+		}
+		
+		log.info("========END OF PENDING REQUESTS=========");
+		assertNotNull(list);
+	}
 	
 	@AfterAll
 	public static void denoteEndOfTesting() {

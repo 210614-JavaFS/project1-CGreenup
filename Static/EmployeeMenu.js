@@ -85,24 +85,30 @@ function showEmployeeMenu(){
 }
 
 async function putData(){
+    console.log("I've begun putting data");
+
     let userObject = {
         username: username
     }
+    console.log("I've got the username: " + username);
+    console.log("I'm about to get data from the Java server");
 
     let response = await fetch(URL + 'requests', {
         method:'POST',
         body:JSON.stringify(userObject)
     })
 
-    console.log(JSON.stringify(userObject));
+    console.log("This is the JSON object I got in return: " + JSON.stringify(userObject));
+    console.log("This is the Response object I created: " + response);
+    console.log("The status code is " + response.status);
     
     if(response.status === 200){
         let data = await response.json();
 
-        console.log(data);
+        console.log("This is the data I recieved: " + data);
         populateTable(data);
     }else{
-        console.log('This user has no previous submissions')
+        console.log('This user has no previous submissions');
     }
 }
 

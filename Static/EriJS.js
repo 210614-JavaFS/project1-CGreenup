@@ -52,6 +52,7 @@ async function attemptLogin(){
 
   }else if (response.status == 200) {
     console.log("success, user is Finance Manager")
+    showManagerMenu();
   }
   else if(response.status === 203){
     console.log("username incorrect");

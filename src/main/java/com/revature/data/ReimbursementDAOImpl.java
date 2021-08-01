@@ -59,7 +59,17 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return false;
 	}
 
-
+	@Override
+	public boolean updateRequest(Reimbursement form) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public Reimbursement getRequest(int id) {
+		return null;
+	}
+	
 	@Override
 	public List<Reimbursement> getUsersRequests(User user) {
 		List<Reimbursement> list = null;
@@ -129,6 +139,71 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return list;
 	}
 
+
 	
+	@Override
+	public List<Reimbursement> getReimbursementsOfStatus(ReimbursementStatus status) {
+		List<Reimbursement> list = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			list = new ArrayList<Reimbursement>();
+			String sql = "SELECT "
+					+ "r.REIMB_ID, r.REIMB_AMOUNT, t.REIMB_TYPE, r.REIMB_DESCRIPTION, u.USER_FIRST_NAME , u.USER_LAST_NAME, r.REIMB_SUBMITTED "
+					+ "FROM 		ERS_REIMBURSEMENT r "
+					+ "INNER JOIN 	ERS_REIMBURSEMENT_TYPE t 	ON r.REIMB_TYPE_ID = t.REIMB_TYPE_ID "
+					+ "INNER JOIN 	ERS_REIMBURSEMENT_STATUS s 	ON r.REIMB_STATUS_ID = s.REIMB_STATUS_ID "
+					+ "INNER JOIN ERS_USERS u					ON r.REIMB_AUTHOR = u.ERS_USER_ID "
+					+ "WHERE s.REIMB_STATUS = ?"
+					+ "ORDER BY REIMB_SUBMITTED ASC;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			UserService.getUserService();
+						
+			statement.setString(1, status.toString());
+			
+			log.info(statement.toString());
+			
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()) {
+				Reimbursement reimb = new Reimbursement();
+				reimb.setId(result.getInt("REIMB_ID"));
+				reimb.setAmount(result.getDouble("REIMB_AMOUNT"));
+				reimb.setDescription(result.getString("REIMB_TYPE") + ": " + result.getString("REIMB_DESCRIPTION"));
+				
+				switch(result.getString("REIMB_TYPE")) {
+				case "MOVING":
+					reimb.setType(ReimbursementTypes.MOVING);
+					break;
+				case "PARKING":
+					reimb.setType(ReimbursementTypes.PARKING);
+					break;
+				case "COMMUTE":
+					reimb.setType(ReimbursementTypes.COMMUTE);
+					break;
+				case "BUSINESS":
+					reimb.setType(ReimbursementTypes.BUSINESS);
+					break;
+				default:
+					reimb.setType(ReimbursementTypes.OTHER);
+				}
+				
+				reimb.setName(result.getString("USER_FIRST_NAME"), result.getString("USER_LAST_NAME"));
+				reimb.setDateSubmitted(result.getTimestamp("REIMB_SUBMITTED"));
+				
+				list.add(reimb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+
+
+
+
 	
 }

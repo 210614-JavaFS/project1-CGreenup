@@ -60,7 +60,9 @@ public class NewReimbursementRequestServlet extends HttpServlet {
 		//Get the type as a string from the JSON, then
 		//convert it into a string so that I can
 		//convert it into a type
-		ReimbursementTypes type = Reimbursement.stringToType(parser.path("type").toString());
+		ReimbursementTypes type = Reimbursement.stringToType(parser.path("type").toString().replace("\"", ""));
+		System.out.println("I was given a string: " + parser.path("type"));
+		System.out.println("The type of form the user is sending is a " + type.toString());
 		
 		ReimbService.getReimbService();
 		ReimbService.addReimbRequest(user, amount, type, description);
