@@ -67,6 +67,9 @@ public class RequestsServlet extends HttpServlet {
 			ReimbService.getReimbService();
 			ReimbursementStatus givenStatus = Reimbursement.stringToStatus(parser.path("status").toString().replace("\"", ""));
 			String json = objectMapper.writeValueAsString(ReimbService.getReimbRequestsByStatus(givenStatus));
+			
+			System.out.println(json);
+			
 			response.getWriter().write(json);
 			response.setStatus(200);
 		}else {

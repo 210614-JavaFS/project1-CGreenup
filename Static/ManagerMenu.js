@@ -105,11 +105,11 @@ function showManagerMenu(username){
   div.appendChild(tableDiv);
 
   managerUsername = username;
-  putMData();
+  getData();
 }
 
 
-async function putMData(){
+async function getData(){
 //    console.log("I've begun putting data");    
     console.log("I've got the username: " + managerUsername);
 
@@ -129,34 +129,38 @@ async function putMData(){
     }
 
     console.log("I'm about to get data from the Java server");
+    //    console.log("This is the JSON object I got in return: " + JSON.stringify(userObject));
+    //    console.log("This is the Response object I created: " + response);
+    //    console.log("The status code is " + response.status);
 
+    //Get all of the pending requests
     let response = await fetch(URL + 'requests', {
         method:'POST',
         body:JSON.stringify(pendingObject)
     })
-
-//    console.log("This is the JSON object I got in return: " + JSON.stringify(userObject));
-//    console.log("This is the Response object I created: " + response);
-//    console.log("The status code is " + response.status);
-    
     if(response.status === 200){
         pendingRequests = await response.json();
+        console.log(pendingRequests);
     }
 
+    //get all of the approved requests
     response = await fetch(URL + 'requests', {
         method:'POST',
         body:JSON.stringify(approvedObject)
     });
     if(response.status === 200){
-        approvedObject = await response.json();
+        approvedRequests = await response.json();
+        console.log(approvedRequests);
     }
 
+    //get all of the denied requests
     response = await fetch(URL + 'requests', {
         method:'POST',
         body:JSON.stringify(deniedObject)
     });
     if(response.status === 200){
-        approvedObject = await response.json();
+        deniedRequests = await response.json();
+        console.log(deniedRequests);
     }
 
     console.log('Finished Async Manager thing');
