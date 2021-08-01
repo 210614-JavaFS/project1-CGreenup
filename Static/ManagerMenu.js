@@ -1,4 +1,9 @@
-function showManagerMenu(){
+let managerUsername;
+let pendingRequests;
+let approvedRequests;
+let deniedRequests;
+
+function showManagerMenu(username){
   clearAll();
 
   let logoutButton = document.createElement('button');
@@ -98,7 +103,61 @@ function showManagerMenu(){
 
   tableDiv.appendChild(table);
   div.appendChild(tableDiv);
-  
+
+  managerUsername = username;
+  putMData();
 }
 
-showManagerMenu();
+
+async function putMData(){
+//    console.log("I've begun putting data");    
+    console.log("I've got the username: " + managerUsername);
+
+
+    //I'm sorry this is hard-coded, I still have a bit to learn about javascript
+    let pendingObject = {
+        username: managerUsername,
+        status: 'PENDING'
+    }
+    let approvedObject = {
+        username: managerUsername,
+        status: 'APPROVED'
+    }
+    let deniedObject = {
+        username: managerUsername,
+        status: 'DENIED'
+    }
+
+    console.log("I'm about to get data from the Java server");
+
+    let response = await fetch(URL + 'requests', {
+        method:'POST',
+        body:JSON.stringify(pendingObject)
+    })
+
+//    console.log("This is the JSON object I got in return: " + JSON.stringify(userObject));
+//    console.log("This is the Response object I created: " + response);
+//    console.log("The status code is " + response.status);
+    
+    if(response.status === 200){
+        pendingRequests = await response.json();
+    }
+
+    response = await fetch(URL + 'requests', {
+        method:'POST',
+        body:JSON.stringify(approvedObject)
+    });
+    if(response.status === 200){
+        approvedObject = await response.json();
+    }
+
+    response = await fetch(URL + 'requests', {
+        method:'POST',
+        body:JSON.stringify(deniedObject)
+    });
+    if(response.status === 200){
+        approvedObject = await response.json();
+    }
+
+    console.log('Finished Async Manager thing');
+}

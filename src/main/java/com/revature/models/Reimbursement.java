@@ -77,5 +77,17 @@ public class Reimbursement {
 		}
 	}
 	
+	public static ReimbursementStatus stringToStatus(String input) {
+		switch(input.strip().toUpperCase().toString()) {
+		case "PENDING":
+		default:
+			return ReimbursementStatus.PENDING;
+		case "DENIED":
+			return ReimbursementStatus.DENIED;
+		case "APPROVED":
+			return ReimbursementStatus.APPROVED;
+		}
+	}
+	
 	
 }

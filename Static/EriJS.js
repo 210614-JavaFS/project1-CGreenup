@@ -48,11 +48,11 @@ async function attemptLogin(){
 
   if(response.status === 201){
     console.log("success, user is Employee");
-    showEmployeeMenu(username);
+    showEmployeeMenu(iUsername);
 
   }else if (response.status == 200) {
     console.log("success, user is Finance Manager")
-    showManagerMenu();
+    showManagerMenu(iUsername);
   }
   else if(response.status === 203){
     console.log("username incorrect");
