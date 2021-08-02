@@ -62,7 +62,7 @@ function showManagerMenu(username){
   tableDiv.appendChild(header);
 
   let table = document.createElement('table');
-  table.className="table";
+  table.className="table table-striped";
   table.id = 'requestTable';
 
   let tableHead = document.createElement('thead');
@@ -164,12 +164,14 @@ async function getData(){
         deniedRequests = await response.json();
         console.log(deniedRequests);
     }
-
+    
+    console.log('Finished Async manager getData');
     refreshTable();
-    console.log('Finished Async Manager thing');
 }
 
 function populateRequestTable(data, typeString){
+    console.log('populating the data for reimbursements of type: ' + typeString);
+
     let tableBody = document.getElementById('tableBody');
 
     for(let i = 0; i < data.length; i++){
@@ -198,13 +200,42 @@ function populateRequestTable(data, typeString){
 
         //add the two buttons
         td = document.createElement('td');
-        row.appendChild(td);
+        if(typeString === 'pending'){
+            let button = document.createElement('button');
+            button.className = 'btn btn-success';
+            button.innerText = 'Approve';
+            button.id = 'approveForm' + req.id;
+            button.style = 'width:50%;';
+            button.onclick = () => {return decideRequest('approve', req.id)};
+   
+            td.appendChild(button);
 
+            button = document.createElement('button');
+            button.className = 'btn btn-danger';
+            button.innerText = 'Deny';
+            button.id = 'denyForm' + req.id;
+            button.style = 'width:50%;'
+            button.onclick = () => {return decideRequest('deny', req.id)};
+
+            td.appendChild(button);
+        }
+        else if (typeString ==='approved'){
+            td.innerText = 'APPROVED';
+            td.className = 'bg bg-success text-white';
+        }
+        else if (typeString ==='denied'){
+            td.innerText = 'DENIED';
+            td.className = 'bg bg-danger text-white';
+        }
+
+        row.appendChild(td);
         tableBody.appendChild(row);
     }
 }
 
 function refreshTable(){
+    console.log("refreshing table");
+
     let tableBody = document.getElementById('tableBody');
     tableBody.innerHTML = "";
     if(document.querySelector('#pendingFilter').checked){
@@ -215,6 +246,18 @@ function refreshTable(){
     }
     if(document.querySelector('#deniedFilter').checked){
         populateRequestTable(deniedRequests, 'denied')
+    }    
+}
+
+async function decideRequest(userAction, requestId){
+    let decision = {
+        action: userAction,
+        username: managerUsername,
+        id: requestId
     }
-    
+    let response = await fetch(URL + "decide-request", {
+        method:'POST',
+        body: JSON.stringify(decision)
+    });
+    getData();
 }

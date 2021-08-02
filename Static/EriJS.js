@@ -1,5 +1,3 @@
-"use strict";
-
 const URL = "http://localhost:8080/project1/"
 let div = document.getElementById('mainDiv');
 
