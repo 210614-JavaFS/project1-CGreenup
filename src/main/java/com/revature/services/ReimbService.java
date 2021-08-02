@@ -40,4 +40,25 @@ public class ReimbService {
 		log.info("Getting reimbursement requests by type " + status.toString());
 		return dao.getReimbursementsOfStatus(status);
 	}
+	
+	public static boolean decideRequest(int id, String identifier, String action) {
+		Reimbursement reimb = new Reimbursement();
+		UserService.getUserService();
+		User user = UserService.getUser(identifier);
+		reimb.setResolver(user);
+		reimb.setId(id);
+
+		switch(action) {
+		case "approve":
+			reimb.setStatus(ReimbursementStatus.APPROVED);
+			break;
+		case "deny":
+			reimb.setStatus(ReimbursementStatus.DENIED);
+			break;
+		default:
+			reimb.setStatus(ReimbursementStatus.PENDING);
+		}
+		
+		return dao.updateRequest(reimb);
+	}
 }

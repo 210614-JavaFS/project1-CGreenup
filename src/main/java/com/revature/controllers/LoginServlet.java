@@ -27,8 +27,8 @@ public class LoginServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 				
-		log.info("Made it to doPost");
-		System.out.println("made it to doPost");
+		log.info("Made it to LoginServlet doPost");
+		System.out.println("made it to LoginServlet doPost");
 		
 		User user = new User();
 		BufferedReader reader = request.getReader();
@@ -43,8 +43,6 @@ public class LoginServlet extends HttpServlet{
 		String body = new String(stringBuilder);		
 		user = objectMapper.readValue(body, User.class);
 		
-		//DEBUG
-		System.out.println(user.toString());
 		
 		UserService.getUserService();
 		

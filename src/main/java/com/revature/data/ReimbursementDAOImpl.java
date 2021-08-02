@@ -59,14 +59,61 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 
 	@Override
 	public boolean updateRequest(Reimbursement form) {
-		// TODO Auto-generated method stub
+		Reimbursement reimbursement = new Reimbursement();
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE ERS_REIMBURSEMENT SET REIMB_STATUS_ID = (SELECT REIMB_STATUS_ID FROM ERS_REIMBURSEMENT_STATUS where REIMB_STATUS = ?), REIMB_RESOLVER = ?, REIMB_RESOLVED = ? "
+					+ "WHERE REIMB_ID = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			int index = 0;
+			//Set the status
+			statement.setString(++index, form.getStatus().toString());
+			//Set the Resolver ID
+			statement.setInt(++index, form.getResolver().getUserId());
+			//Set the date resolved
+			statement.setTimestamp(++index, new Timestamp(new Date().getTime()));
+			
+			//set the Reimbursement ID
+			statement.setInt(++index, form.getId());
+			
+			log.info(statement.toString());
+			System.out.println(statement.toString());
+			
+			return statement.execute();
+			
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 	
-	@Override
-	public Reimbursement getRequest(int id) {
-		return null;
-	}
+//	@Override
+//	public Reimbursement getRequest(int id) {
+//		Reimbursement reimbursement = new Reimbursement();
+//		try(Connection conn = ConnectionUtil.getConnection()){
+//			String sql = "SELECT  "
+//					+ "r.REIMB_ID, r.REIMB_AMOUNT, t.REIMB_TYPE, r.REIMB_DESCRIPTION, u.USER_FIRST_NAME , u.USER_LAST_NAME, r.REIMB_SUBMITTED, u.ERS_USER_ID  "
+//					+ "FROM 		ERS_REIMBURSEMENT r  "
+//					+ "INNER JOIN 	ERS_REIMBURSEMENT_TYPE t 	ON r.REIMB_TYPE_ID = t.REIMB_TYPE_ID "
+//					+ "INNER JOIN 	ERS_REIMBURSEMENT_STATUS s 	ON r.REIMB_STATUS_ID = s.REIMB_STATUS_ID "
+//					+ "INNER JOIN ERS_USERS u					ON r.REIMB_AUTHOR = u.ERS_USER_ID "
+//					+ "WHERE r.REIMB_ID = ?;";
+//			
+//			PreparedStatement statement = conn.prepareStatement(sql);
+//			statement.setInt(1, id);
+//			
+//			
+//			
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return reimbursement;
+//	}
 	
 	@Override
 	public List<Reimbursement> getUsersRequests(User user) {

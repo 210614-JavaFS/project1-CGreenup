@@ -56,7 +56,7 @@ public class Reimbursement {
 	public void setType(ReimbursementTypes type) 			{ this.type = type;							}
 	public void setName(String name)						{ this.name = name;							}
 	public void setName(String firstName, String lastName)	{ this.name = firstName + " " + lastName;	}
-
+	
 	@Override
 	public String toString() {
 		return "Reimbursement [id=" + id + ", amount=" + amount + ", dateSubmitted=" + dateSubmitted + ", dateResolved="

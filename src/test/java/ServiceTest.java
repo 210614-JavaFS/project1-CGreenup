@@ -113,7 +113,7 @@ public class ServiceTest {
 	
 	@Test
 	public void getRequestByStatusTest() {
-		List<Reimbursement> list = reimbImpl.getReimbursementsOfStatus(ReimbursementStatus.DENIED);
+		List<Reimbursement> list = reimbImpl.getReimbursementsOfStatus(ReimbursementStatus.PENDING);
 		
 		log.info("These are all of the pending Requests:");
 		

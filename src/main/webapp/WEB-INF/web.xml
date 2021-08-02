@@ -37,6 +37,15 @@
   	<url-pattern>/requests</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>Decisions</servlet-name>
+  	<servlet-class>com.revature.controllers.RequestDecisionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Decisions</servlet-name>
+  	<url-pattern>/decide-request</url-pattern>
+  </servlet-mapping>
+  
   
   
 </web-app>

@@ -43,7 +43,6 @@ public class RequestsServlet extends HttpServlet {
 		}
 		
 		String body = new String(stringBuilder);
-		System.out.println("body = " + body);
 		
 		JsonNode parser = objectMapper.readTree(body);
 		
@@ -52,7 +51,6 @@ public class RequestsServlet extends HttpServlet {
 		user.setUsername(parser.path("username").toString().replace("\"", ""));
 		user = UserService.getUser(user.getUsername());
 		
-		System.out.println(user.toString());
 		UserService.getUserService();
 		
 		//If the user is an employee, return all of the requests for that employee
@@ -67,8 +65,6 @@ public class RequestsServlet extends HttpServlet {
 			ReimbService.getReimbService();
 			ReimbursementStatus givenStatus = Reimbursement.stringToStatus(parser.path("status").toString().replace("\"", ""));
 			String json = objectMapper.writeValueAsString(ReimbService.getReimbRequestsByStatus(givenStatus));
-			
-			System.out.println(json);
 			
 			response.getWriter().write(json);
 			response.setStatus(200);
