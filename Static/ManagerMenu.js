@@ -37,7 +37,9 @@ function showManagerMenu(username){
     filter.className = 'form-check-input';
     filter.id = filterString.toLowerCase() + "Filter";
     filter.type = 'checkbox';
-    filter.checked = true;
+    if(filterOptions[i] === 'Pending'){
+        filter.checked = true;
+    }
     filter.value = true;
     filter.onchange = refreshTable;
     inlineDiv.appendChild(filter);
