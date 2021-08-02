@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.services.ReimbService;
 
 public class RequestDecisionServlet extends HttpServlet {
 
@@ -37,5 +38,14 @@ public class RequestDecisionServlet extends HttpServlet {
 		System.out.println("REQUEST DECISION body = " + body);
 		
 		JsonNode parser = objectMapper.readTree(body);
+		
+		int id = parser.path("id").asInt();
+		String userIdentifier = parser.path("username").toString().replace("\"", "");
+		String action = parser.path("action").toString().replace("\"", "");
+		
+		ReimbService.getReimbService();
+		
+		System.out.println(id + " " + action + " " + userIdentifier);
+		System.out.println(ReimbService.decideRequest(id, userIdentifier, action));
 	}
 }
