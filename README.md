@@ -32,6 +32,7 @@ Requires Tomcat, Maven, and Spring Tool Suite or Java Eclipse:
 * import project folder using Spring Tool Suite(STS) or Java Eclipse (JE)
 * Install dependencies using Maven
 * Add this line of code to the Tomcat's Server.xml: 
+      
       <Context docBase="project1-CGreenup" path="/project1" reloadable="true" source="org.eclipse.jst.jee.server:project1-CGreenup"/></Host>
 * Deploy project onto Tomcat Server
 * Go to http://localhost:8080/static/
