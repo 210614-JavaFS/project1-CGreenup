@@ -24,6 +24,18 @@ The Expense Reimbursement System (ERS) manages the process of reimbursing employ
 * Has reasonable test coverage of the service layer 
 * Implements Logback for appropriate logging. 
 
+## Getting Started
+
+Requires Tomcat, Maven, and Spring Tool Suite or Java Eclipse:
+
+* git clone https://github.com/210614-JavaFS/project1-CGreenup.git
+* import project folder using Spring Tool Suite(STS) or Java Eclipse (JE)
+* Install dependencies using Maven
+* Deploy project onto Tomcat Server
+* Go to http://localhost:8080/static/
+
+## Usage
+
 **State-chart Diagram (Reimbursement Statuses)** 
 ![](./imgs/state-chart.jpg)
 
@@ -32,14 +44,18 @@ The Expense Reimbursement System (ERS) manages the process of reimbursing employ
 Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OTHER.
 
 **Logical Model**
+
 ![](./imgs/logical.jpg)
 
 **Physical Model**
+
 ![](./imgs/physical.jpg)
 
 **Use Case Diagram**
+
 ![](./imgs/use-case.jpg)
 
 **Activity Diagram**
+
 ![](./imgs/activity.jpg)
 
