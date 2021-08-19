@@ -39,26 +39,14 @@ Requires Tomcat, Maven, and Spring Tool Suite or Java Eclipse:
 
 ## Usage
 
-**State-chart Diagram (Reimbursement Statuses)** 
-![](./imgs/state-chart.jpg)
+Once on the locally hosted site (http://localhost:8080/static/) The user will be able to log in to a defined account using the log in page and fields
 
-**Reimbursement Types**
+If the user inputs a valid login, the user will be redirected
+* If the user is a finance manager, they will be sent to the manager functions page
+* If the user in an employee, they will be shown the employee page
 
-Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OTHER.
+Managers can approve or deny incoming requests using the buttons on the right.
+Managers can also filter requests by request status using the filters in the top right
 
-**Logical Model**
-
-![](./imgs/logical.jpg)
-
-**Physical Model**
-
-![](./imgs/physical.jpg)
-
-**Use Case Diagram**
-
-![](./imgs/use-case.jpg)
-
-**Activity Diagram**
-
-![](./imgs/activity.jpg)
-
+Employees are shown all of their previously submitted requests with their status and information in a table.
+Employees can also make a new request clicking the green button at the top
